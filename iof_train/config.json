@@ -1,0 +1,5 @@
+{
+  "model_id": "efficientdet_lite0", 
+  "val_dir": "val",
+  "train_dir": "train"
+}
