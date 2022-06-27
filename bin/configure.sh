@@ -18,9 +18,6 @@ echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" | sud
 sudo apt-get update
 sudo apt-get install edgetpu-compiler
 
-sudo apt-get install libportaudio2
-pip3 install sounddevice
-pip3 install numpy
 
 
 
