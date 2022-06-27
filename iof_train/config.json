@@ -1,5 +1,5 @@
 {
-  "model_id": "efficientdet_lite0", 
-  "val_dir": "val",
-  "train_dir": "train"
+  "model_id": "efficientdet_lite0",
+  "val_dir": "augmented_data_051922/valid",
+  "train_dir": "augmented_data_051922/train"
 }
