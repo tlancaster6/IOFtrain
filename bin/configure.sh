@@ -14,6 +14,11 @@ pip install --upgrade pip
 pip install tensorflow
 pip install tflite-model-maker
 pip install pycocotools
+pip install opencv-python
+pip install pascal_voc_writer
+conda install -c conda-forge imgaug
+conda install -c conda-forge albumentations
+conda install -c anaconda xmltodict
 
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" | sudo tee /etc/apt/sources.list.d/coral-edgetpu.list
