@@ -16,6 +16,8 @@ pip install tflite-model-maker
 pip install pycocotools
 pip install opencv-python
 pip install pascal_voc_writer
+pip install tqdm
+
 conda install -c conda-forge imgaug
 conda install -c conda-forge albumentations
 conda install -c anaconda xmltodict
