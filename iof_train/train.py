@@ -28,6 +28,7 @@ def train(data_dir, model_id, epochs=10, batch_size=16):
     info_log.write(f'n_validL {len(val_data)}\n')
     info_log.write(f'epochs: {epochs}\n')
     info_log.write(f'model_id: {model_id}\n')
+    info_log.write(f'batch_size{batch_size}\n')
     info_log.close()
 
     my_model_spec = model_spec.get(model_id)
