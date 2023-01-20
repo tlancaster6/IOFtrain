@@ -13,5 +13,5 @@ import os
 #                         visualize=False)
 
 
-def train_network(data_dir, model_id, epochs):
-    train(data_dir, model_id, epochs)
+def train_network(data_dir, model_id, epochs=10, batch_size=16):
+    train(data_dir, model_id, epochs, batch_size)

@@ -11,7 +11,8 @@ assert tf.__version__.startswith('2')
 
 tf.get_logger().setLevel('ERROR')
 
-def train(data_dir, model_id, epochs):
+
+def train(data_dir, model_id, epochs=10, batch_size=16):
     results_dir = os.path.join(defs.RESULTS_DIR, dt.datetime.now().strftime("%m%d%yT%H%M"))
     if not os.path.exists(results_dir):
         os.makedirs(results_dir)
@@ -35,7 +36,7 @@ def train(data_dir, model_id, epochs):
         os.makedirs(checkpoint_dir)
     my_model_spec.config.model_dir = checkpoint_dir
     my_model_spec.config.map_freq = 1
-    model = object_detector.create(train_data, model_spec=my_model_spec, batch_size=32, train_whole_model=True, epochs=epochs,
+    model = object_detector.create(train_data, model_spec=my_model_spec, batch_size=batch_size, train_whole_model=True, epochs=epochs,
                                    validation_data=val_data, do_train=True)
     eval_log = open(os.path.join(results_dir, 'evaluation.log'), 'w')
     eval_log.write('prequant evaluation:\n')
