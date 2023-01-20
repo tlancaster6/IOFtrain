@@ -12,3 +12,5 @@ def augment_dataset(source_dir, output_dir, transform_func=transform1, reps_per_
                         transform_func=transform_func, reps_per_im=reps_per_im,
                         visualize=False)
 
+
+augment_dataset('raw_data\\training', 'transform1_9x\\training')
