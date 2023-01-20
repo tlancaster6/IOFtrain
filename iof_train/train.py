@@ -27,6 +27,7 @@ def train(data_dir, model_id, epochs):
     info_log.write(f'n_validL {len(val_data)}\n')
     info_log.write(f'epochs: {epochs}\n')
     info_log.write(f'model_id: {model_id}\n')
+    info_log.close()
 
     my_model_spec = model_spec.get(model_id)
     checkpoint_dir = os.path.join(results_dir, 'checkpoints')
@@ -53,4 +54,3 @@ def train(data_dir, model_id, epochs):
     move(os.path.join(defs.BASE_DIR, edge_filename), results_dir)
     move(os.path.join(defs.BASE_DIR, log_filename), results_dir)
     eval_log.close()
-    info_log.close()
