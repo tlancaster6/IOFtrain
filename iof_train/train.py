@@ -2,7 +2,7 @@ import os
 import datetime as dt
 import json
 import subprocess as sp
-from shutil import move
+from shutil import move, copy
 
 from tflite_model_maker import model_spec
 from tflite_model_maker import object_detector
@@ -17,21 +17,29 @@ PACKAGE_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(PACKAGE_DIR)
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 RESULTS_DIR = os.path.join(BASE_DIR, 'results', dt.datetime.now().strftime("%m%d%yT%H%M"))
-if not os.path.exists(RESULTS_DIR):
-    os.makedirs(RESULTS_DIR)
+CHECKPNT_DIR = os.path.join(RESULTS_DIR, 'checkpoints')
+if not os.path.exists(CHECKPNT_DIR):
+    os.makedirs(CHECKPNT_DIR)
 
 with open(os.path.join(PACKAGE_DIR, 'config.json'), 'r') as f:
     config_dict = json.load(f)
+copy(os.path.join(PACKAGE_DIR, 'config.json'), RESULTS_DIR)
 
 TRAIN_DIR = os.path.join(DATA_DIR, config_dict['train_dir'])
 VAL_DIR = os.path.join(DATA_DIR, config_dict['val_dir'])
 
-label_map = {1: 'fish', 2: 'pipe'}
+label_map = {1: 'fish'}
 train_data = object_detector.DataLoader.from_pascal_voc(TRAIN_DIR, TRAIN_DIR, label_map=label_map)
 val_data = object_detector.DataLoader.from_pascal_voc(VAL_DIR, VAL_DIR, label_map=label_map)
 
-model_spec = model_spec.get(config_dict['model_id'])
-model = object_detector.create(train_data, model_spec=model_spec, batch_size=32, train_whole_model=True, epochs=100,
+mod_spec = model_spec.get(config_dict['model_id'])
+mod_spec.config.optimizer = 'adam'
+# mod_spec.config.input_rand_hflip = False
+mod_spec.config.model_dir = CHECKPNT_DIR
+mod_spec.config.map_freq = 1
+
+
+model = object_detector.create(train_data, model_spec=mod_spec, batch_size=16, train_whole_model=True, epochs=1000,
                                validation_data=val_data, do_train=True)
 eval_log = open(os.path.join(RESULTS_DIR, 'evaluation.log'), 'w')
 print('prequant evaluation:', file=eval_log)

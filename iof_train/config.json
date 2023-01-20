@@ -1,5 +1,5 @@
 {
-  "model_id": "efficientdet_lite0",
-  "val_dir": "whiterock_aug3/valid",
-  "train_dir": "whiterock_aug3/train"
+  "model_id": "efficientdet_lite1",
+  "val_dir": "whiterock_crops-7/valid",
+  "train_dir": "whiterock_crops-7/train"
 }
