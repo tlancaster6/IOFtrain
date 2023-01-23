@@ -1,6 +1,7 @@
 import definitions as defs
 from iof_train.train import train
 import os
+from iof_train.tensorboard_utils import convert_tb_data
 # from iof_train.augment import apply_augmentations, transform1
 
 # def augment_dataset(source_dir, output_dir, transform_func=transform1, reps_per_im=3):
@@ -15,3 +16,9 @@ import os
 
 def train_network(data_dir, model_id, epochs=10, batch_size=16):
     train(data_dir, model_id, epochs, batch_size)
+
+
+def tensorboard_to_csv(tb_checkpoint_dir):
+    df = convert_tb_data(tb_checkpoint_dir, sort_by='step')
+    df.to_csv(os.path.join(os.path.dirname(tb_checkpoint_dir), 'metrics.csv'))
+    return df
