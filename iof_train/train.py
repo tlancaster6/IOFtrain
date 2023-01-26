@@ -44,7 +44,7 @@ def train(data_dir, model_id, epochs=10, batch_size=16, use_wandb=True):
     my_model_spec.config.num_epochs = epochs
     my_model_spec.config.batch_size = batch_size
     if use_wandb:
-        wandb.init(project='IOFtrain', sync_tensorboard=True)
+        wandb.init(project='IOFtrain', sync_tensorboard=True, reinit=True)
         wandb.run.name = run_name
     model = object_detector.create(train_data, model_spec=my_model_spec, batch_size=batch_size, train_whole_model=True,
                                    epochs=epochs, validation_data=val_data, do_train=True)
@@ -71,8 +71,9 @@ def train(data_dir, model_id, epochs=10, batch_size=16, use_wandb=True):
 
     if use_wandb:
         wandb.config.update(my_model_spec.config.as_dict())
-        for key, val in prequant_eval:
+        wandb.config.update({'data_source': dir.split('/')[-1]})
+        for key, val in prequant_eval.items():
             wandb.run.summary[f'prequant_{key}'] = val
-        for key, val in postquant_eval:
+        for key, val in postquant_eval.items():
             wandb.run.summary[f'postquant_{key}'] = val
         wandb.finish()
