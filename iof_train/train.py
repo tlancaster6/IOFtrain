@@ -9,6 +9,7 @@ from tflite_model_maker.config import ExportFormat
 import tensorflow as tf
 import wandb
 assert tf.__version__.startswith('2')
+from glob import glob
 
 tf.get_logger().setLevel('ERROR')
 
@@ -77,3 +78,6 @@ def train(data_dir, model_id, epochs=10, batch_size=16, use_wandb=True):
         for key, val in postquant_eval.items():
             wandb.run.summary[f'postquant_{key}'] = val
         wandb.finish()
+    for checkpoint_file in glob(os.path.join(checkpoint_dir, 'ckpt*')):
+        os.remove(checkpoint_file)
+
