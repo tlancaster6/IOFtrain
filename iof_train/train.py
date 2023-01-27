@@ -71,7 +71,7 @@ def train(data_dir, model_id, epochs=10, batch_size=16, use_wandb=True):
 
     if use_wandb:
         wandb.config.update(my_model_spec.config.as_dict())
-        wandb.config.update({'data_source': dir.split('/')[-1]})
+        wandb.config.update({'data_source': data_dir.split('/')[-1]})
         for key, val in prequant_eval.items():
             wandb.run.summary[f'prequant_{key}'] = val
         for key, val in postquant_eval.items():
